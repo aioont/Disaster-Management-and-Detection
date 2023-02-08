@@ -1,0 +1,45 @@
+<!-- index.html -->
+
+<!-- Include the Leaflet CSS and JavaScript files -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+
+<!-- Create a div to hold the map -->
+<div id="map" style="height: 400px; width: 100%;"></div>
+<a class="getstarted scrollto" href="{% url 'validate_disaster' %}">Validate Disaster Report<br></a>
+<script>
+    // Create the map and set its view to the center of the map
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    // Add an OpenStreetMap tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add a marker to the map using the user's current location
+    map.locate({
+        setView: true,
+        maxZoom: 16
+    });
+
+    function onLocationFound(e) {
+        var marker = L.marker(e.latlng).addTo(map);
+        marker.bindPopup("You are here, You can only report disaster at your location!").openPopup();
+        $.ajax({
+        type: "POST",
+        url: "/api/location/",
+        data: {
+            lat: e.latlng.lat,
+            lng: e.latlng.lng,
+        },
+        success: function (response) {
+            console.log("Location saved successfully");
+        },
+        error: function (error) {
+            console.error("Failed to save location", error);
+        }
+    });
+    }
+
+    map.on('locationfound', onLocationFound);
+</script>
