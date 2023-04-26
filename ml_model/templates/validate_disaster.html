@@ -1,4 +1,13 @@
-<form method="POST">
-  {% csrf_token %} {{ form }}
+
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
+
+<h1>Validate a reported disaster</h1>
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form }}<br>
   <input type="submit" value="Submit" />
 </form>

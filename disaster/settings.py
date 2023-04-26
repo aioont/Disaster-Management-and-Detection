@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'disaster_report.apps.GoogleConfig',
     'volunteer',
-    'ml_model'
-    # 'disaster_report',
-
+    'ml_model',
+    'guide',
+    'leaflet',
 ]
 
 MIDDLEWARE = [
@@ -130,10 +130,24 @@ USE_L10N = True
 USE_TZ = True
 
 
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/volunteer/static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'volunteer', 'static')
+]
+MEDIA_ROOT = '/media/'
+MEDIA_URL = '/media/'
+
+
+
+
+
 
 AUTH_USER_MODEL = 'volunteer.CustomUser'
 

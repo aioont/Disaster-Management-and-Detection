@@ -88,7 +88,7 @@ def map(request):
         lat = request.POST.get('lat')
         lng = request.POST.get('lng')
         user = request.user
-        location = disaster_report.objects.create(lat=lat, lng=lng, name=name)
+        location = Disaster_report.objects.create(lat=lat, lng=lng, name=name)
         return HttpResponse("Location saved successfully")
     return HttpResponse("Failed to save location")
     return render(request, 'map.html',context)

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ disaster.name }} - Disaster Details</title>
+	<style>
+		body {
+			font-family: 'Roboto', sans-serif;
+			margin: auto;
+			padding: 0;
+			background-color: #f4f4f4;
+		}
+
+		.container {
+			max-width: 800px;
+			margin: 20px auto;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+			border-radius: 5px;
+		}
+
+		h1 {
+			font-size: 36px;
+			margin-bottom: 20px;
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+			margin-bottom: 20px;
+		}
+
+		p {
+			font-size: 16px;
+			line-height: 1.6;
+			margin-bottom: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>{{ disaster.name }}</h1>
+		{% if disaster.image %}
+		<img src="{{ disaster.image.url }}" alt="{{ disaster.name }}">
+		{% endif %}
+		<p>{{ disaster.description }}</p>
+		<h2>Impact</h2>
+		<p>{{ disaster.impact }}</p>
+		<h2>Precautions</h2>
+		<p>{{ disaster.precautions }}</p>
+	</div>
+</body>
+</html>

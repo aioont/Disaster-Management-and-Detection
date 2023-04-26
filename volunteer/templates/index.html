@@ -23,7 +23,8 @@
   <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
 
 
 </head>
@@ -43,14 +44,15 @@
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li class="dropdown"><a href="#"><span>Opening</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="#">Shop register</a></li>
+              <li><a href="{% url 'shopregister' %}">Shop register</a></li>
               <li><a href="{% url 'serviceregister' %}">Service Register</a></li>
-              <li><a href="#">Hospital</a></li>
+              <li><a href="{% url 'hospitalregister' %}">Hospital</a></li>
               <li><a href="{% url 'volunteerregister' %}">Volunteer</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="{% url 'map' %}">Report a Disaster</a></li>
           <li><a class="getstarted scrollto" href="{% url 'volunteerregister' %}">Become a Volunteer</a></li>
+          <li><a class="getstarted scrollto" href="{% url 'loginPage' %}">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -68,7 +70,7 @@
           <h2>We are Dedicated AI platform to Manage disaster</h2>
           <div class="d-flex justify-content-center justify-content-lg-start">
             <a href="https://rzp.io/l/sSaCK92EGG" class="btn-get-started scrollto">Donate for Affected Place</a>
-            <a href="#" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+            <a href="{% static 'explanation.mp4' %}" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
           </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
@@ -88,13 +90,36 @@
     <div class="footer-newsletter">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
+          <h2>Recent Disasters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Zipcode</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Address</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Images</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for disaster in latest_disasters %}
+    <tr>
+      <td>{{ disaster.name }}</td>
+      <td>{{ disaster.zipcode }}</td>
+      <td>{{ disaster.city }}</td>
+      <td>{{ disaster.country }}</td>
+      <td>{{ disaster.adress }}</td>
+      <td>{{ disaster.latitude }}</td>
+      <td>{{ disaster.longitude }}</td>
+      <td><img src="" width="100" height="100" alt="Image not found"></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
         </div>
       </div>
     </div>
@@ -106,22 +131,20 @@
           <div class="col-lg-3 col-md-6 footer-contact">
             <h3>DMGT</h3>
             <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              Kerala <br>
+              Kerala,IN 600000<br>
+              India <br><br>
+              <strong>Phone:</strong> +91 1234567890 <br>
+              <strong>Email:</strong> dmgt@example.com<br>
             </p>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'home' %}">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'about' %}">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'type-of-disasters' %}">Details of Disasters</a></li>
             </ul>
           </div>
 

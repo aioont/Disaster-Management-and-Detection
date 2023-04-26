@@ -41,3 +41,5 @@ tzdata==2022.1
 urllib3==1.26.9
 wcwidth==0.2.5
 widgetsnbextension==4.0.1
+
+django-leaflet

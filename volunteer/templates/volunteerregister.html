@@ -1,3 +1,9 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
+
+  <h1>Register as a volunteer</h1>
 <form  method="POST">
     {% csrf_token %}
     {{ form }}<br>

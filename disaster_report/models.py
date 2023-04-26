@@ -13,7 +13,20 @@ class Disaster_report(models.Model):
     # lat = models.FloatField(blank=True, default=True)
     # lng = models.FloatField(blank=True, default=True)
     location = models.PointField(null=True)
-    images = models.ImageField(null=True, blank=True)
+    images = models.ImageField(upload_to='disaster_images/', null=True, blank=True)
+
+# class Disaster_report(models.Model):
+#     name = models.CharField(max_length=200, unique=True)
+#     zipcode = models.CharField(max_length=200,blank=True, null=True)
+#     city = models.CharField(max_length=200,blank=True, null=True)
+#     country = models.CharField(max_length=200,blank=True, null=True)
+#     adress = models.CharField(max_length=200,blank=True, null=True)
+#     latitude = models.CharField(max_length=200,blank=True, null=True)
+#     longitude = models.CharField(max_length=200,blank=True, null=True)
+#     # lat = models.FloatField(blank=True, default=True)
+#     # lng = models.FloatField(blank=True, default=True)
+#     location = models.PointField(null=True)
+#     images = models.ImageField(upload_to='disaster_images/', null=True, blank=True)
 
 
     def __str__(self):

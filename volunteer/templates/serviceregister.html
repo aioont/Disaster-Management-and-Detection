@@ -1,5 +1,18 @@
-<form  method="POST">
+{% load static %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
+</head>
+
+<body>
+  <h1>Register Service</h1>
+  <form method="POST">
     {% csrf_token %}
-    {{ form }}<br>
+    {% for field in form %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    <br>
+    {% endfor %}
     <input type="submit" value="Submit">
-</form>
+  </form>
+</body>

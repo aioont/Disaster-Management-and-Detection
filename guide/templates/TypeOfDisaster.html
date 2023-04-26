@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>Disaster Links</title>
+	<style>
+	body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0 auto;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+	}
+
+	h1 {
+		margin-bottom: 30px;
+		color: #1d3557;
+		font-weight: 700;
+		font-size: 36px;
+		text-align: center;
+	}
+
+	.link-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.link-list li {
+		margin-bottom: 20px;
+	}
+
+	.link-list a {
+		display: block;
+		padding: 10px;
+		background-color: #fff;
+		border-radius: 10px;
+		text-decoration: none;
+		color: #1d3557;
+		font-weight: bold;
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease-in-out;
+		width: 250px;
+		text-align: center;
+	}
+
+	.link-list a:hover {
+		background-color: #1d3557;
+		color: #fff;
+		transform: translateY(-5px);
+		box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+	}
+</style>
+
+</head>
+<body>
+	<div class="container">
+		<h1>Disasters</h1>
+		<ul class="link-list">
+            {% for disaster in disasters %}
+                <li><a href="{% url 'disaster_detail' disaster.id %}">{{ disaster.name }}</a></li>
+            
+            {% endfor %}
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.gis.admin import OSMGeoAdmin
-from .models import CustomUser, Volunteer, Service, ServiceAdmin
+from .models import CustomUser, Volunteer, Service, ServiceAdmin, Hospital, Shop
 # Register your models here.
 
 @admin.register(CustomUser)
@@ -12,4 +12,6 @@ class ShopAdmin(OSMGeoAdmin):
 
 admin.site.register(Volunteer)
 admin.site.register(Service)
+admin.site.register(Hospital)
+admin.site.register(Shop)
 

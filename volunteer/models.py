@@ -35,6 +35,12 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     
+    USER_TYPE_CHOICES = (
+        ('authority', 'Authority'),
+        ('volunteer', 'Volunteer'),
+        ('user', 'User'),
+    )
+    
     username = None
     email = models.EmailField(('email address'), unique=True)
     mobile = models.CharField(max_length=15, null=True, blank= True)
@@ -42,8 +48,7 @@ class CustomUser(AbstractUser):
     forget_password = models.CharField(max_length=255, blank= True, null=True)
     location = models.PointField(null=True)
     address =  models.CharField(max_length=100, null=True)
-    
-    
+    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='user')
 
     USERNAME_FIELD = 'email'
 
@@ -54,6 +59,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.first_name
 
+
 class Volunteer(models.Model):
     
     volunteer_email = models.EmailField(('email address'), unique=True)
@@ -61,12 +67,18 @@ class Volunteer(models.Model):
     volunteer_address =  models.CharField(max_length=100, null=True)
     volunteer_skills = models.CharField(max_length=250, null=True)
 
+    def __str__(self):
+        return self.volunteer_email
+
 class Service(models.Model):
     service_name = models.CharField(max_length=100, null= True)
     service_email = models.EmailField(('email address'), unique=True)
     service_mobile = models.CharField(max_length=15, null=True, blank= True)
     service_address =  models.CharField(max_length=100, null=True)
     service_type = models.CharField(max_length=250, null=True)
+
+    def __str__(self):
+        return self.service_name
 
 class ServiceAdmin(models.Model):
     serviceadmin_name = models.CharField(max_length=100)
@@ -76,3 +88,23 @@ class ServiceAdmin(models.Model):
 
     def __str__(self):
         return self.serviceadmin_name
+
+class Hospital(models.Model):
+    hospital_name = models.CharField(max_length=100)
+    hospital_address = models.CharField(max_length=100)
+    hospital_type = models.CharField(max_length=100)
+    hospital_contact = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.hospital_name
+
+
+class Shop(models.Model):
+    shop_name = models.CharField(max_length=100)
+    shop_detail = models.CharField(max_length=100)
+    shop_type = models.CharField(max_length=100)
+    shop_contact = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.shop_name
+

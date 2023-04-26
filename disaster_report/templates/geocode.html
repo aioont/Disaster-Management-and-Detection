@@ -1,4 +1,10 @@
 {% extends 'base.html' %} {% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
+
+
+
 
 <div class="pageholder">
   <div class="titleholder">
@@ -23,7 +29,7 @@
         <th>Geocode</th>
       </tr>
 
-      {%for a in clubs%}
+      {% for a in clubs %}
       <tr>
         <td>{{a.name}}</td>
         <td>{{a.adress}}</td>

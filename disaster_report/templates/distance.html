@@ -1,7 +1,10 @@
-
+{% load static %}
 {% extends 'google/base.html' %}
 {% block content %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
+	
 <div class="pageholder">
     <div class="titleholder"> 
         <div class="title"><i class="fas fa-people-arrows mr-2"></i> Google Maps #2: Distance </div>
