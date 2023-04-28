@@ -1856,3 +1856,43 @@ section {
   }
 }
 
+/* Extra added */
+
+#nav-menu-container {
+  display: flex;
+  align-items: center;
+}
+
+.nav-menu {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+
+.nav-menu li {
+  margin: 0 15px;
+}
+
+.nav-menu li a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-menu li a:hover, .nav-menu li.active a {
+  color: #F29E02;
+}
+
+.nav-menu li strong {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-weight: 700;
+}

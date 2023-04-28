@@ -3,18 +3,40 @@ from .models import *
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
+from disaster_report.models import Disaster_report
+
+class DisasterFormEdit(forms.ModelForm):
+    class Meta:
+        model = Disaster_report
+        fields = '__all__'
+        exclude = ['location']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
+            'zipcode': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
+            'city': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
+            'country': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
+            'address': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
+            'latitude': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
+            'longitude': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
+            'description': forms.Textarea(attrs={'class': 'textarea textarea-bordered textarea-primary w-full max-w-xs'}),
+            'status': forms.Select(choices=Disaster_report.STATUS_CHOICES)
+        }
+
+
+
 
 class VolunteerForm(ModelForm):
 
     class Meta:
         model = Volunteer
-        fields = '__all__'
-        widgets = {
-            'volunteer_email': forms.EmailInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
+        exclude = ['user','volunteer_email']  # exclude user field from the form
+        widgets = {     
             'volunteer_mobile': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
             'volunteer_address': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
             'volunteer_skills': forms.TextInput(attrs={'class': 'input input-bordered input-primary w-full max-w-xs'}),
         }
+
+
 
 
 class ServiceForm(ModelForm):

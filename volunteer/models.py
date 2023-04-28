@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.gis.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.conf import settings
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
@@ -61,7 +62,8 @@ class CustomUser(AbstractUser):
 
 
 class Volunteer(models.Model):
-    
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='volunteer', default=1)
     volunteer_email = models.EmailField(('email address'), unique=True)
     volunteer_mobile = models.CharField(max_length=15, null=True, blank= True)
     volunteer_address =  models.CharField(max_length=100, null=True)
@@ -69,6 +71,7 @@ class Volunteer(models.Model):
 
     def __str__(self):
         return self.volunteer_email
+
 
 class Service(models.Model):
     service_name = models.CharField(max_length=100, null= True)

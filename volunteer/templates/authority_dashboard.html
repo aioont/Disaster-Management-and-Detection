@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Authority Dashboard</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Zipcode</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Address</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Images</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for report in disaster_reports %}
+    <tr>
+      <td>
+        <a href="{% url 'disasterdetail' disaster_report_id=report.id %}">{{ report.name }}</a>
+      </td>
+      <td>{{ report.zipcode }}</td>
+      <td>{{ report.city }}</td>
+      <td>{{ report.country }}</td>
+      <td>{{ report.adress }}</td>
+      <td>{{ report.latitude }}</td>
+      <td>{{ report.longitude }}</td>
+      <td><img src="" width="100" alt="Image not found"></td>
+      <td>
+           {{ report.status }}
+      </td>
+      <td>
+          <a href="{% url 'authority_dashboard_edit' disaster_report_id=report.id %}">Edit report</a>
+      </td>
+      
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

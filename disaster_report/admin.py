@@ -4,3 +4,4 @@ from .models import *
 
 admin.site.register(Disaster_report)
 # Register your models here.
+

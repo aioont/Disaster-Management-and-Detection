@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+</head>
+{% block content %}
+  <h1>{{ disaster_reports.name }}</h1>
+  <h1>Status: {{ disaster_reports.status }}</h1>
+
+<table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Zipcode</th>
+        <th>City</th>
+        <th>Country</th>
+        <th>Address</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Images</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <a href="{% url 'disasterdetail' disaster_report_id=disaster_reports.id %}">{{ disaster_reports.name }}</a>
+        </td>
+        <td>{{ disaster_reports.zipcode }}</td>
+        <td>{{ disaster_reports.city }}</td>
+        <td>{{ disaster_reports.country }}</td>
+        <td>{{ disaster_reports.adress }}</td>
+        <td>{{ disaster_reports.latitude }}</td>
+        <td>{{ disaster_reports.longitude }}</td>
+        <td><img src="" width="100" height="100" alt="Image not found"></td>
+      </tr>
+   
+    </tbody>
+    
+  </table>
+ 
+  <div style="text-align: center;">
+    <a href="{% url 'nearvolunteer' %}" style="font-family: sans-serif; font-weight: bold; font-size: 16px; letter-spacing: 1px; display: inline-block; padding: 10px 28px 11px 28px; border-radius: 50px; transition: 0.5s; margin: 10px 0 0 0; color: #fff;background: #47b2e4;">Near volunteer</a>
+    <br>
+    <a href="{% url 'serviceadmin' %}" style="font-family: sans-serif; font-weight: bold; font-size: 16px; letter-spacing: 1px; display: inline-block; padding: 10px 28px 11px 28px; border-radius: 50px; transition: 0.5s; margin: 10px 0 0 0; color: #fff;background: #47b2e4;">Near services</a>
+
+  </div>
+  
+  {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

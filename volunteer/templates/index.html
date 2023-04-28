@@ -51,8 +51,36 @@
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="{% url 'map' %}">Report a Disaster</a></li>
-          <li><a class="getstarted scrollto" href="{% url 'volunteerregister' %}">Become a Volunteer</a></li>
-          <li><a class="getstarted scrollto" href="{% url 'loginPage' %}">Login</a></li>
+          
+          {% if user.user_type != 'volunteer' %}
+              <li><a class="getstarted scrollto" href="{% url 'volunteerregister' %}">Become a Volunteer</a></li>
+          {% endif %}
+          
+  
+        <nav id="nav-menu-container">
+          <ul class="nav-menu">
+          {% if not user.is_authenticated %}
+                <li><a class="getstarted scrollto" href="{% url 'loginPage' %}">Login</a></li>
+                <li><a class="getstarted scrollto" href="{% url 'signup' %}">Sign Up</a></li>
+          {% else %}
+              <li><a href="#">Welcome, <strong>{{ user.first_name }}</strong></a>
+                <span style="color:azure; margin-left: 30px;">({{ user.user_type }})</span>
+              </li>
+              {% if user.user_type == 'authority' %}
+                <li><a href="{% url 'authority_dashboard' %}">Authority Dashboard</a></li>
+              {% endif %}
+              {% if user.user_type == 'volunteer' %}
+                <li><a href="{% url 'volunteer_dashboard' %}">Volunteer Dashboard</a></li>
+              {% endif %}
+              
+              
+              <li><a href="{% url 'logout' %}?next=/">Logout</a></li>
+          {% endif %}
+          </ul>
+      </nav>
+      
+        
+        
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -108,7 +136,9 @@
   <tbody>
     {% for disaster in latest_disasters %}
     <tr>
-      <td>{{ disaster.name }}</td>
+      <td>
+        <a href="{% url 'disasterdetail' disaster_report_id=disaster.id %}">{{ disaster.name }}</a>
+      </td>
       <td>{{ disaster.zipcode }}</td>
       <td>{{ disaster.city }}</td>
       <td>{{ disaster.country }}</td>
@@ -119,6 +149,7 @@
     </tr>
     {% endfor %}
   </tbody>
+  
 </table>
         </div>
       </div>

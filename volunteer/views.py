@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from .forms import UserAdminCreationForm
 from .forms import *
@@ -13,15 +13,19 @@ from django.views import generic
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models.functions import Distance
 from disaster_report.models import Disaster_report
+from django.contrib.auth.decorators import user_passes_test
 
 
+from django.shortcuts import get_object_or_404, redirect, render
+from .forms import DisasterFormEdit
+from disaster_report.models import Disaster_report
 
 longitude = Disaster_report().longitude
 latitude = Disaster_report().latitude
 
 user_location = Point(longitude, latitude, srid=4326)
 
-
+#Near volunteers
 class NearVolunteer(generic.ListView):
     model = CustomUser
     context_object_name = 'shops'
@@ -34,6 +38,7 @@ longitude = Disaster_report().longitude
 latitude = Disaster_report().latitude
 service_location = Point(longitude, latitude, srid=4326)
 
+#Near services
 class NearService(generic.ListView):
     model = ServiceAdmin
     context_object_name = 'service'
@@ -42,7 +47,57 @@ class NearService(generic.ListView):
     ).order_by('distance')[0:3]
     template_name = 'nearservice.html'
 
-# Create your views here.
+
+
+
+@login_required
+def DisasterDetail(request, disaster_report_id):
+    disaster_reports = get_object_or_404(Disaster_report, id=disaster_report_id)
+    print(disaster_reports) 
+
+    context ={'disaster_reports': disaster_reports}
+    return render(request, 'disaster_detail.html', context)
+
+
+
+
+
+
+@login_required
+def authority_dashboard_edit(request, disaster_report_id):
+    disaster_reports = get_object_or_404(Disaster_report, id=disaster_report_id)
+    print(disaster_reports)
+    if request.method == 'POST':
+        form = DisasterFormEdit(request.POST, instance=disaster_reports)
+        if form.is_valid():
+            form.save()
+            return redirect('authority_dashboard')
+    else:
+        form = DisasterFormEdit(instance=disaster_reports)
+
+    context = {'form': form, 'disaster_reports': disaster_reports}
+    return render(request, 'authority_dashboard_edit.html', context)
+
+
+def authority_dashboard(request):
+    if request.user.is_authenticated and request.user.user_type == 'authority':
+        disaster_reports = Disaster_report.objects.all()
+        context = {'disaster_reports': disaster_reports}
+    else:
+        context = {}
+
+    return render(request, 'authority_dashboard.html', context)
+
+
+def volunteer_dashboard(request):
+    if request.user.is_authenticated and request.user.user_type == 'volunteer':
+        disaster_reports = Disaster_report.objects.all()
+        context = {'disaster_reports': disaster_reports}
+    else:
+        context = {}
+
+    return render(request, 'volunteer_dashboard.html', context)
+
 
 
 # @login_required(login_url='login')
@@ -54,18 +109,30 @@ def homePage(request):
     return render(request, 'index.html', context)
 
 
-def VolunteerRegisterPage(request):
 
-    form = VolunteerForm()
+
+
+
+@login_required
+def VolunteerRegisterPage(request):
     if request.method == 'POST':
         form = VolunteerForm(request.POST)
         if form.is_valid():
-            form.save()
-
-
-            # messages.success(request, 'Account Created for ' + user + ' Please login')
+            volunteer = form.save(commit=False)
+            volunteer.user = request.user
+            volunteer.save()
+            
+            # Update user_type for the current user
+            user = request.user
+            user.user_type = 'volunteer'
+            user.save()
+            
             return redirect('home')
+    else:
+        form = VolunteerForm()
     return render(request, 'volunteerregister.html', {'form': form})
+
+
 
 def ServiceRegisterPage(request):
 
@@ -103,9 +170,6 @@ def HospitalRegisterPage(request):
     return render(request, 'hospitalregister.html', {'form': form})
 
 
-
-
-
 def loginPage(request):
     
     if request.method == 'POST':
@@ -123,7 +187,6 @@ def loginPage(request):
             
 
     return render(request, 'login.html')
-
 
 
 def signup(request):

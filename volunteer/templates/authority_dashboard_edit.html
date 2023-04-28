@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Edit a disaster report</h1>
+
+        <form method="POST" action="{% url 'authority_dashboard_edit' disaster_report_id=disaster_reports.id %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+       
+          <button type="submit">Save</button>
+        </form>
+    
+{% endblock %}
